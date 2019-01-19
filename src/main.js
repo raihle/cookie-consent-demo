@@ -1,8 +1,13 @@
 import Vue from "vue";
-import App from "./App.vue";
 
 Vue.config.productionTip = false;
 
-new Vue({
-  render: h => h(App)
-}).$mount("#app");
+import("./pages" + location.pathname + ".vue")
+  .catch(function() {
+    return import("./pages/App.vue");
+  })
+  .then(function(module) {
+    new Vue({
+      render: h => h(module.default)
+    }).$mount("#app");
+  });
